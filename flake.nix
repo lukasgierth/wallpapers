@@ -61,6 +61,22 @@
                 source = wallpapers.${e.collection}.${e.file};
               };
             })
+            # GNOME: XML-Manifest, sonst listet der Hintergrund-Dialog die Bilder nicht
+            // fileAttrs chosen (e:
+              let bg = "${homeDir}/.local/share/backgrounds/${e.collection}-${e.file}"; in {
+                "${homeDir}/.local/share/gnome-background-properties/${idOf e}.xml" = {
+                  text = ''
+                    <?xml version="1.0" encoding="UTF-8"?>
+                    <!DOCTYPE wallpapers SYSTEM "gnome-wp-list.dtd">
+                    <wallpapers>
+                      <wallpaper deleted="false">
+                        <name>${lib.escapeXML (idOf e)}</name>
+                        <filename>${lib.escapeXML bg}</filename>
+                      </wallpaper>
+                    </wallpapers>
+                  '';
+                };
+              })
             # KDE: KWallet-Bild
             // fileAttrs chosen (e: {
               "${homeDir}/.local/share/wallpapers/${idOf e}/contents/image${extOf e.file}" = {

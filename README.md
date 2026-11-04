@@ -52,7 +52,9 @@ nix build '.#wallpapers."charlie-henson"."GDWP-795-4K-No-Logo-Image-1.jpg"' --pr
 
 This installs every selected image as
 
-- `~/.local/share/backgrounds/<collection>-<file>` (GNOME background picker)
+- `~/.local/share/backgrounds/<collection>-<file>` (image file for GNOME)
+- `~/.local/share/gnome-background-properties/<collection>-<stem>.xml`
+  (GNOME background picker only lists XML descriptors, not raw images)
 - `~/.local/share/wallpapers/<collection>-<stem>/` as a KDE Plasma wallpaper
   package (`metadata.json` + `contents/image.<ext>`)
 
