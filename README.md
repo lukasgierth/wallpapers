@@ -11,7 +11,8 @@ used directly as a desktop background or as `stylix.image`.
 ```
 
 - exactly one level: `charlie-henson/GDWP-795-4K-No-Logo-Image-1.jpg`
-- a collection may hold any number of images
+- a collection may hold any number of images (`charlie-henson/` has six,
+  `misc/` has one)
 - collection names: kebab-case, no spaces or special characters
 - image file names: anything except `"` (it breaks attr/JSON names)
 - empty collections are ignored
@@ -56,9 +57,11 @@ This installs every selected image as
 - `~/.local/share/gnome-background-properties/<collection>-<stem>.xml`
   (GNOME background picker only lists XML descriptors, not raw images)
 - `~/.local/share/wallpapers/<collection>-<stem>/` as a KDE Plasma wallpaper
-  package (`metadata.json` + `contents/image.<ext>`)
+  package (`metadata.json` + `contents/image.jpg`, i.e. `image<ext>`)
 
-The same module works on NixOS and non-NixOS systems with Nix + home-manager.
+The module only uses `home.file`, so it should behave identically on NixOS and
+on non-NixOS systems with Nix + home-manager. Manual verification on both is
+still open (see `PLAN.md`).
 
 ### Stylix
 
@@ -79,4 +82,9 @@ Nix only sees files that are tracked by git, so stage new images before
 evaluating (`git add <collection>/...`). An empty folder cannot be committed
 and disappears on clone.
 
-See `PLAN.md` for the design decisions and open consumer-side work.
+The flake builds its `runCommand` wrappers with
+`nixpkgs.legacyPackages.x86_64-linux`; the image contents are
+platform-independent, but the derivations are x86_64-linux.
+
+See `PLAN.md` (local, gitignored) for the design decisions and open
+consumer-side work.
